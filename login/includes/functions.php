@@ -66,4 +66,9 @@ function mySqlErrors($response)
             echo "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>An error occurred... try again</div>";
 
     }
-};
+}
+
+function storeService($service,$data){
+    echo "<pre>";
+    print_r($data);
+}

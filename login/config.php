@@ -8,7 +8,7 @@ include 'dbconf.php';
 $site_name = 'Test Site';
 
 //Maximum Login Attempts
-$max_attempts = 5;
+$max_attempts = 50;
 //Timeout (in seconds) after max attempts are reached
 $login_timeout = 300;
 

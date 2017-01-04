@@ -1,0 +1,13 @@
+URL: https://phonebook.hdvbx.com
+(s)ftp: phonebook.hdvbx.com
+user: hdvbx_phonebook
+pass: PQa2*mN-
+
+SOCIAL CONNECT: lic_473d7a02-7efc-412e-952b-fedc0
+CONTACT IMPORTER: lic_8f9536da-4490-4288-b848-2a56c
+
+ohh yes the SQL DB is the same credentials...
+
+url: phonebook.hdvbx.com
+user: hdvbx_phonebook
+pass: PQa2*mN-

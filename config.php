@@ -1,5 +1,5 @@
 <?php
-	$authpageUrl = "http://localhost:97/oauth.html";
+	$authpageUrl = "http://localhost:92/oauth.html";
 	$cilicense="lic_8f9536da-4490-4288-b848-2a56c";
     $crmcilicense="your CRM contacts license key here";
 	$filicense="your friends inviter license key here";

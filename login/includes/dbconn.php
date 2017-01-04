@@ -5,13 +5,15 @@ class DbConn
     public $conn;
     public function __construct()
     {
-        require 'dbconf.php';
+        $abs = $_SERVER['DOCUMENT_ROOT']."/login/";
+        require $abs.'dbconf.php';
         $this->host = $host; // Host name
         $this->username = $username; // Mysql username
         $this->password = $password; // Mysql password
         $this->db_name = $db_name; // Database name
         $this->tbl_prefix = $tbl_prefix; // Prefix for all database tables
         $this->tbl_members = $tbl_members;
+        $this->tbl_contacts = $tbl_contacts;
         $this->tbl_attempts = $tbl_attempts;
 
         try {

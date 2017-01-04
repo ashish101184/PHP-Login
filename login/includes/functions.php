@@ -4,12 +4,16 @@ spl_autoload_register(function ($className) {
 
     $className = strtolower($className);
     $path = "includes/{$className}.php";
-
+    $abs = $_SERVER['DOCUMENT_ROOT']."/login/";
     if (file_exists($path)) {
 
         require_once($path);
 
-    } else {
+    }elseif(file_exists($abs.$path)){
+    
+        require_once($abs.$path);
+    }else {
+
 
         die("The file {$className}.php could not be found.");
 
@@ -66,9 +70,4 @@ function mySqlErrors($response)
             echo "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>An error occurred... try again</div>";
 
     }
-}
-
-function storeService($service,$data){
-    echo "<pre>";
-    print_r($data);
 }

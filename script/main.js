@@ -1,7 +1,7 @@
 $(function () {
     //BEGIN MENU SIDEBAR
     $('#sidebar').css('min-height', '100%');
-    $('#side-menu').metisMenu();
+//    $('#side-menu').metisMenu();
 
     $(window).bind("load resize", function () {
         if ($(this).width() < 768) {
@@ -19,23 +19,23 @@ $(function () {
     //END MENU SIDEBAR
 
     //BEGIN TOPBAR DROPDOWN
-    $('.dropdown-slimscroll').slimScroll({
-        "height": '250px',
-        "wheelStep": 5
-    });
+//    $('.dropdown-slimscroll').slimScroll({
+//        "height": '250px',
+//        "wheelStep": 5
+//    });
     //END TOPBAR DROPDOWN
 
     //BEGIN CHECKBOX & RADIO
-    if($('#demo-checkbox-radio').length <= 0){
-        $('input[type="checkbox"]:not(".switch")').iCheck({
-            checkboxClass: 'icheckbox_minimal-grey',
-            increaseArea: '20%' // optional
-        });
-        $('input[type="radio"]:not(".switch")').iCheck({
-            radioClass: 'iradio_minimal-grey',
-            increaseArea: '20%' // optional
-        });
-    }
+//    if($('#demo-checkbox-radio').length <= 0){
+//        $('input[type="checkbox"]:not(".switch")').iCheck({
+//            checkboxClass: 'icheckbox_minimal-grey',
+//            increaseArea: '20%' // optional
+//        });
+//        $('input[type="radio"]:not(".switch")').iCheck({
+//            radioClass: 'iradio_minimal-grey',
+//            increaseArea: '20%' // optional
+//        });
+//    }
     //END CHECKBOX & RADIO
 
     //BEGIN TOOTLIP
@@ -66,20 +66,20 @@ $(function () {
     }
     // INITIALIZE THEME FROM COOKIE
     // HAVE TO SET VALUE FOR STYLE&COLOR BEFORE AND AFTER ACTIVE THEME
-    if ($.cookie('style')) {
-        list_style.find('option').each(function(){
-            if($(this).attr('value') == $.cookie('style')) {
-                $(this).attr('selected', 'selected');
-            }
-        });
-        list_color.removeClass("active");
-        list_color.each(function(){
-            if($(this).attr('data-color') == $.cookie('color')){
-                $(this).addClass('active');
-            }
-        });
-        setTheme($.cookie('style'), $.cookie('color'));
-    };
+//    if ($.cookie('style')) {
+//        list_style.find('option').each(function(){
+//            if($(this).attr('value') == $.cookie('style')) {
+//                $(this).attr('selected', 'selected');
+//            }
+//        });
+//        list_color.removeClass("active");
+//        list_color.each(function(){
+//            if($(this).attr('data-color') == $.cookie('color')){
+//                $(this).addClass('active');
+//            }
+//        });
+//        setTheme($.cookie('style'), $.cookie('color'));
+//    };
     // SELECT EVENT
     list_style.on('change', function() {
         list_color.each(function() {
@@ -304,10 +304,10 @@ $(function () {
     //END CHECKBOX TABLE
 
     //BEGIN JQUERY NEWS UPDATE
-    $('#news-update').ticker({
-        controls: false,
-        titleText: ''
-    });
+//    $('#news-update').ticker({
+//        controls: false,
+//        titleText: ''
+//    });
     //END JQUERY NEWS UPDATE
 
     $('.option-demo').hover(function() {
@@ -332,7 +332,7 @@ $(function () {
         return false;
     });
     // CALL FUNCTION RESPONSIVE TABS
-    fakewaffle.responsiveTabs(['xs', 'sm']);
+//    fakewaffle.responsiveTabs(['xs', 'sm']);
 
 });
 

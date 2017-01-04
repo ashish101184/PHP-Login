@@ -11,3 +11,41 @@ ohh yes the SQL DB is the same credentials...
 url: phonebook.hdvbx.com
 user: hdvbx_phonebook
 pass: PQa2*mN-
+
+
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address1` varchar(255) NOT NULL,
+  `address2` varchar(255) NOT NULL,
+  `dob` varchar(30) NOT NULL,
+  `phone` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `contacts` ADD `service` VARCHAR(10) NOT NULL AFTER `id`;
+
+ALTER TABLE `contacts` ADD `last_modified` DATETIME NOT NULL AFTER `phone`;
+ALTER TABLE `contacts` ADD `member_id` INT(11) NOT NULL AFTER `id`;
+ALTER TABLE `contacts` CHANGE `member_id` `member_id` CHAR(23) NOT NULL;

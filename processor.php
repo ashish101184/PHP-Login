@@ -70,9 +70,16 @@ function storeSelectedContacts() {
 
 //store loaded contacts
 function storeLoadedContacts() {
-    $addressbook = json_decode($_POST['data'],true);
-    storeService($_POST['service'],$_POST['data']);
-    echo sizeof($addressbook);
+    $addressbook = json_decode($_POST['data'],true);  
+    include 'login/createContact.php';
+//    storeService($_POST['service'],$_POST['data']);
+    if(sizeof($addressbook)){
+        if($addedCount) $message = 'Contact has been added';
+        else $message = "Contact already exist";
+    }else{
+        $message = "No contact found";
+    }
+    echo $message;
     exit;
 }
 

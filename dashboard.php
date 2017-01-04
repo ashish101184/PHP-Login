@@ -157,10 +157,10 @@ include 'config.php';
                                                     <a href="#" class="todo-complete">
                                                         <i class="fa fa-check"></i>
                                                     </a>
-                                                    <a href="#" class="todo-edit">
+                                                    <a href="login/operation.php?service=gmail&list=1" class="todo-edit">
                                                         <i class="fa fa-list"></i>
                                                     </a>                                                    
-                                                    <a href="#" class="todo-remove">
+                                                    <a href="login/operation.php?service=gmail&export=1" class="todo-remove">
                                                         <i class="fa fa-file-excel-o"></i>
                                                     </a>
                                                     <a href="#" class="todo-remove" onclick="socialinviter.contactimporter.auth('gmail')">
@@ -227,7 +227,7 @@ include 'config.php';
 //             $("#txtloadedContacts").html(unescape(contacts));
              var postdata =  {action: "contacts",service:service,data:JSON.stringify(data)};
 			 $.post("processor.php", postdata, function (response) {
-				//console.log(response);
+				alert(response);
 			 });
          }
          var storeSelectedContacts = function () {

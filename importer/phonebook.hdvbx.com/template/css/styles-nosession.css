@@ -1,0 +1,44 @@
+html,html a {
+	-webkit-font-smoothing: antialiased;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+body {
+
+}
+
+a:hover, a:active{ color: #ff9640; } 
+
+/* Layout */
+.wrapper {
+  min-height: 100%;
+  position: relative;
+  max-width: 1250px;
+  margin: 0 auto;
+  min-height: 100%;
+  position: relative;
+	
+}
+.wrapper:before,
+.wrapper:after {
+  content: " ";
+  display: table;
+}
+.wrapper:after {
+  clear: both;
+}
+.content-wrapper{
+	
+}
+.header{
+	margin: 0 auto;
+	font-size: 20px;
+	margin-bottom: 30px;
+	color: black;
+}
+.header a:link, a:visited, a:hover a:active{
+	text-decoration: none;
+}
+li.planfeatured.col-md-3 {
+    padding: 0 5px;
+}

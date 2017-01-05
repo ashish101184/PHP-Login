@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    Options +FollowSymLinks
+    Options All -Indexes
+	
+    RewriteBase /
+	
+	# Enforce SSL https://www. 
+	RewriteCond %{HTTPS} !=on
+	RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} !(\.png|\.jpg|\.gif|\.jpeg|\.bmp|\.css|\.js)$
+	RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+	
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+	ErrorDocument 400 /errordocs/401.php
+	ErrorDocument 401 /errordocs/402.php
+	ErrorDocument 403 /errordocs/403.php
+	ErrorDocument 404 /errordocs/404.php
+	ErrorDocument 500 /errordocs/500.php
+</IfModule>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh|conf)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>

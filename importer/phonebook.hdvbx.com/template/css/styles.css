@@ -1,0 +1,31 @@
+/* TEMPLATE OVERRIDE STYLES */
+.user-header{ height: auto !important; }
+	
+
+/* FORM VALIDATION */
+/*.err {
+    color: #d22e35;
+	display: none;
+	position:absolute;
+	line-height: 26pt;
+}*/   
+:invalid + .icon-validation::before {
+    content: attr(data-icon);
+    color: red;
+}
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../../template/img/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+    background-color:#222;
+}
+
+.notifymsg {
+	display: none;
+}

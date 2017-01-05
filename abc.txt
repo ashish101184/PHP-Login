@@ -49,3 +49,5 @@ ALTER TABLE `contacts` ADD `service` VARCHAR(10) NOT NULL AFTER `id`;
 ALTER TABLE `contacts` ADD `last_modified` DATETIME NOT NULL AFTER `phone`;
 ALTER TABLE `contacts` ADD `member_id` INT(11) NOT NULL AFTER `id`;
 ALTER TABLE `contacts` CHANGE `member_id` `member_id` CHAR(23) NOT NULL;
+
+ALTER TABLE `contacts`  ADD `street` VARCHAR(255) NOT NULL  AFTER `phone`,  ADD `city` VARCHAR(50) NOT NULL  AFTER `street`,  ADD `state` VARCHAR(50) NOT NULL  AFTER `city`,  ADD `zip` VARCHAR(50) NOT NULL  AFTER `state`,  ADD `country` VARCHAR(50) NOT NULL  AFTER `zip`,  ADD `imageurl` TEXT NOT NULL  AFTER `country`,  ADD `website` VARCHAR(200) NOT NULL  AFTER `imageurl`,  ADD `notes` TEXT NOT NULL  AFTER `website`;

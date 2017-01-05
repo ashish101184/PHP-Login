@@ -1,0 +1,99 @@
+/* PAGE LOADER */
+.cssload-fond{position:relative;margin:auto}.cssload-container-general{animation:cssload-animball_two 1.9s infinite;-o-animation:cssload-animball_two 1.9s infinite;-ms-animation:cssload-animball_two 1.9s infinite;-webkit-animation:cssload-animball_two 1.9s infinite;-moz-animation:cssload-animball_two 1.9s infinite;width:72px;height:72px}.cssload-internal{width:72px;height:72px;position:absolute}.cssload-ballcolor{width:33px;height:33px;border-radius:50%}.cssload-ball_1,.cssload-ball_2,.cssload-ball_3,.cssload-ball_4{position:absolute;animation:cssload-animball_one 1.9s infinite ease;-o-animation:cssload-animball_one 1.9s infinite ease;-ms-animation:cssload-animball_one 1.9s infinite ease;-webkit-animation:cssload-animball_one 1.9s infinite ease;-moz-animation:cssload-animball_one 1.9s infinite ease}.cssload-ball_1{background-color:#cb2025;top:0;left:0}.cssload-ball_2{background-color:#f8b334;top:0;left:39px}.cssload-ball_3{background-color:#00a096;top:39px;left:0}.cssload-ball_4{background-color:#97bf0d;top:39px;left:39px}@keyframes cssload-animball_one{0%,100%{position:absolute}50%{top:20px;left:20px;position:absolute;opacity:.5}}@-o-keyframes cssload-animball_one{0%,100%{position:absolute}50%{top:20px;left:20px;position:absolute;opacity:.5}}@-ms-keyframes cssload-animball_one{0%,100%,50%{position:absolute}50%{top:20px;left:20px;opacity:.5}}@-webkit-keyframes cssload-animball_one{0%,100%{position:absolute}50%{top:20px;left:20px;position:absolute;opacity:.5}}@-moz-keyframes cssload-animball_one{0%,100%{position:absolute}50%{top:20px;left:20px;position:absolute;opacity:.5}}@keyframes cssload-animball_two{0%{transform:rotate(0) scale(1)}50%{transform:rotate(360deg) scale(1.3)}100%{transform:rotate(720deg) scale(1)}}@-o-keyframes cssload-animball_two{0%{-o-transform:rotate(0) scale(1)}50%{-o-transform:rotate(360deg) scale(1.3)}100%{-o-transform:rotate(720deg) scale(1)}}@-ms-keyframes cssload-animball_two{0%{-ms-transform:rotate(0) scale(1)}50%{-ms-transform:rotate(360deg) scale(1.3)}100%{-ms-transform:rotate(720deg) scale(1)}}@-webkit-keyframes cssload-animball_two{0%{-webkit-transform:rotate(0) scale(1)}50%{-webkit-transform:rotate(360deg) scale(1.3)}100%{-webkit-transform:rotate(720deg) scale(1)}}@-moz-keyframes cssload-animball_two{0%{-moz-transform:rotate(0) scale(1)}50%{-moz-transform:rotate(360deg) scale(1.3)}100%{-moz-transform:rotate(720deg) scale(1)}}
+
+/* CONTACTS */
+.panel .panel-body.contact {
+  -moz-border-radius: 5px 5px 0px 0px;
+  -webkit-border-radius: 5px 5px 0px 0px;
+  border-radius: 5px 5px 0px 0px;
+}
+.contact {
+  width: 100%;
+  float: left;
+  padding: 15px 10px;
+  position: relative;
+  background: #2d3945;
+}
+.contact .contact-image {
+  float: left;
+  width: 100%;
+  margin: 0px 0px 10px;
+  text-align: center;
+}
+.contact .contact-image img {
+  width: 100px;
+  height: 100px;
+  border: 3px solid #FFF;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.contact .contact-data {
+  width: 100%;
+  float: left;
+  text-align: center;
+}
+.contact .contact-data .contact-data-name {
+  width: 100%;
+  float: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFF;
+}
+.contact .contact-data .contact-data-title {
+  width: 100%;
+  float: left;
+  font-size: 11px;
+  font-weight: 400;
+  color: #999;
+}
+.contact .contact-controls a {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  color: #FFF;
+  border: 2px solid #FFF;
+  line-height: 25px;
+  position: absolute;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  padding: 0px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+.contact .contact-controls a.contact-control-left {
+  left: 15px;
+  top: 53px;
+  text-align: center;
+}
+.contact .contact-controls a.contact-control-right {
+  right: 15px;
+  top: 53px;
+  text-align: center;
+}
+.contact .contact-controls a .fa,
+.contact .contact-controls a .glyphicon {
+  width: auto;
+  margin-right: auto;
+}
+.contact .contact-controls a:hover {
+  border-color: #DDD;
+  color: #DDD;
+}
+.contact-info {
+  float: left;
+  width: 100%;
+}
+.contact-info p {
+  margin-bottom: 5px;
+}
+.contact-info strong {
+  font-size: 13px;
+}
+.contact-info small {
+  font-weight: 700;
+}

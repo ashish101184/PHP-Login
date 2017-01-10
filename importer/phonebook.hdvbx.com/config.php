@@ -9,12 +9,12 @@ define('WEB_TESTMODE', '1'); //0=TestingOFF, 1=TestingON, 2=Testing(LiveTwilio T
 define('DEBUGGER', '1'); //Only Admin can see. 0=Off, 1=On
 
 if(checkLocalhost()){
-	define('PATH_DOMAIN', 'https://localhost/hdvbx/phonebook.hdvbx.com');
-	define('PATH_INCLUDE', $_SERVER['DOCUMENT_ROOT'].'/hdvbx/panel.hdvbx.com');
+	define('PATH_DOMAIN', 'http://127.0.0.1:97');
+	define('PATH_INCLUDE', $_SERVER['DOCUMENT_ROOT']);
 	
 	define('DB_HOST', 'localhost');
 	define('DB_USER', 'root');
-	define('DB_PASS', 'L0c4lR00t!');
+	define('DB_PASS', '');
 	define('DB_NAME', 'hdvbx_phonebook');
 }else{
 	define('PATH_DOMAIN', 'https://phonebook.hdvbx.com');

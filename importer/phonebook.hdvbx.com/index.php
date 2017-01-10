@@ -9,6 +9,7 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1){
 		$pagename = "Register";
 		
 		$publickey = "6LeOWiQTAAAAAJJgYFjPmWF7kBYnYNoau1NNVwaZ";
+		$publickey = "6LfjwBAUAAAAAHiNXb5BjO1DRYzwhnmc0k1Ang8h";
 		include(PATH_INCLUDE.'/template/php-plugins/recaptchalib.php');
 		
 		include(PATH_INCLUDE.'/template/php-nosession/header.php');
@@ -44,6 +45,7 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1){
 		$pagename = "Login";
 		
 		$publickey = "6LeOWiQTAAAAAJJgYFjPmWF7kBYnYNoau1NNVwaZ";
+		$publickey = "6LfjwBAUAAAAAHiNXb5BjO1DRYzwhnmc0k1Ang8h";
 		include(PATH_INCLUDE.'/template/php-plugins/recaptchalib.php');
 		
 		include(PATH_INCLUDE.'/template/php-nosession/header.php');

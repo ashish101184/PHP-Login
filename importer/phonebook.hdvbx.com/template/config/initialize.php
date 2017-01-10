@@ -10,7 +10,7 @@ header("Cache-Control: get-check=0, pre-check=0",false); session_cache_limiter()
 
 function checkLocalhost(){
 	$testingip = array('phonebook.hdvbx.com');
-	$localhost=array("theadw.local","localhost","10.0.1.2");
+	$localhost=array("theadw.local","localhost","10.0.1.2","localhost:97","127.0.0.1:97");
 	if(in_array($_SERVER['HTTP_HOST'],$localhost) || in_array($_SERVER['SERVER_ADDR'],$localhost) || in_array($_SERVER['REMOTE_ADDR'],$localhost))
 		return true;
 	else if(in_array($_SERVER['HTTP_HOST'],$testingip) || in_array($_SERVER['SERVER_ADDR'],$testingip) || in_array($_SERVER['REMOTE_ADDR'],$testingip)){

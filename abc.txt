@@ -51,3 +51,581 @@ ALTER TABLE `contacts` ADD `member_id` INT(11) NOT NULL AFTER `id`;
 ALTER TABLE `contacts` CHANGE `member_id` `member_id` CHAR(23) NOT NULL;
 
 ALTER TABLE `contacts`  ADD `street` VARCHAR(255) NOT NULL  AFTER `phone`,  ADD `city` VARCHAR(50) NOT NULL  AFTER `street`,  ADD `state` VARCHAR(50) NOT NULL  AFTER `city`,  ADD `zip` VARCHAR(50) NOT NULL  AFTER `state`,  ADD `country` VARCHAR(50) NOT NULL  AFTER `zip`,  ADD `imageurl` TEXT NOT NULL  AFTER `country`,  ADD `website` VARCHAR(200) NOT NULL  AFTER `imageurl`,  ADD `notes` TEXT NOT NULL  AFTER `website`;
+
+
+===========================================
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 10, 2017 at 04:30 AM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.5.37
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `hdvbx_phonebook`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `client_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `email` mediumtext NOT NULL,
+  `password` text NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `datecreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastlogin` datetime NOT NULL,
+  `status` int(1) NOT NULL COMMENT '0=NotVerified, 1=VerifiedEmail, 2=LockedOut',
+  `access` set('a','m','u') NOT NULL DEFAULT 'u' COMMENT 'a=admin, m=moderator, u=user',
+  `authkey` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`client_id`, `firstname`, `lastname`, `email`, `password`, `country`, `datecreated`, `lastlogin`, `status`, `access`, `authkey`) VALUES
+(1, 'Benjamin', 'Moses', 'bmoses088@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'United States', '2017-01-04 10:22:16', '2017-01-04 22:48:03', 1, 'u', 'dcdebde5a8b030f2cc8e7411b93d70f48118a63ac00d08fd25e04f9b60c85cf6'),
+(2, 'Ashish', 'patel', 'ashish101184qa@gmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'India', '2017-01-05 23:41:41', '2017-01-05 19:14:06', 1, 'u', '5227c9a8e54300728ea09bedbcb1f72b3917c9070afc5632f685131f719b3ffb');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_contacts`
+--
+
+CREATE TABLE `client_contacts` (
+  `contact_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `service` varchar(10) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `dob` varchar(30) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `zip` varchar(50) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `imageurl` text NOT NULL,
+  `website` varchar(200) NOT NULL,
+  `notes` text NOT NULL,
+  `last_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_services`
+--
+
+CREATE TABLE `client_services` (
+  `linkedservice_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `lastsync` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `client_services`
+--
+
+INSERT INTO `client_services` (`linkedservice_id`, `client_id`, `service_id`, `lastsync`, `status`) VALUES
+(1, 1, 1, '0000-00-00 00:00:00', 0),
+(2, 1, 2, '0000-00-00 00:00:00', 0),
+(3, 1, 3, '0000-00-00 00:00:00', 0),
+(4, 2, 1, '0000-00-00 00:00:00', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `member_id` char(23) NOT NULL,
+  `service` varchar(10) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address1` varchar(255) NOT NULL,
+  `address2` varchar(255) NOT NULL,
+  `dob` varchar(30) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `zip` varchar(50) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `imageurl` text NOT NULL,
+  `website` varchar(200) NOT NULL,
+  `notes` text NOT NULL,
+  `last_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `member_id`, `service`, `first_name`, `last_name`, `email`, `address1`, `address2`, `dob`, `phone`, `street`, `city`, `state`, `zip`, `country`, `imageurl`, `website`, `notes`, `last_modified`) VALUES
+(1, '803040535586d12d319fac', 'gmail', '', '', 'ashish101184@hotmail.com', '', '', '--', '', '', '', '', '', '', '', '', '', '2017-01-04 07:22:26'),
+(2, '803040535586d12d319fac', 'gmail', '', '', 'ashish101184@gmail.com', '', '', '--', '', '', '', '', '', '', '', '', '', '2017-01-04 07:22:26'),
+(33, '1483890783586d160e5a579', 'gmail', 'Ben', 'Moses', 'bmoses088@gmail.com', 'Array', '', '05-03-1988', '07760460451', '', '', '', '', '', '', '', '', '2017-01-04 08:06:21'),
+(34, '1483890783586d160e5a579', 'gmail', 'David', 'Fialka', 'davidfialka@hotmail.com', 'Array', '', '02-24-2011', '+447952084331', '', '', '', '', '', '', '', '', '2017-01-04 08:06:21'),
+(35, '1483890783586d160e5a579', 'gmail', 'David', 'Itzcovitz', 'doovydoo@gmail.com', 'Array', '', '04-16-', '+447708547149', '', '', '', '', '', '', '', '', '2017-01-04 08:06:21'),
+(36, '1483890783586d160e5a579', 'gmail', 'Alexander', 'Elston', 'alexelston1987@gmail.com', 'Array', '', '02-25-1987', '+447946116024', '', '', '', '', '', '', '', '', '2017-01-04 08:06:21'),
+(37, '1483890783586d160e5a579', 'gmail', 'Daniel', 'Jaffa', 'danieljaffa@hotmail.com', 'Array', '', '01-28-2011', '+972546411921', '', '', '', '', '', '', '', '', '2017-01-04 08:06:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loginattempts`
+--
+
+CREATE TABLE `loginattempts` (
+  `IP` varchar(20) NOT NULL,
+  `Attempts` int(11) NOT NULL,
+  `LastLogin` datetime NOT NULL,
+  `Username` varchar(65) DEFAULT NULL,
+  `ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `loginattempts`
+--
+
+INSERT INTO `loginattempts` (`IP`, `Attempts`, `LastLogin`, `Username`, `ID`) VALUES
+('103.36.80.116', 1, '2017-01-04 07:22:13', 'ashish', 1),
+('67.247.1.65', 1, '2017-01-04 07:35:36', 'bmoses088', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `members`
+--
+
+CREATE TABLE `members` (
+  `id` char(23) NOT NULL,
+  `username` varchar(65) NOT NULL DEFAULT '',
+  `password` varchar(65) NOT NULL DEFAULT '',
+  `email` varchar(65) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
+  `mod_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `members`
+--
+
+INSERT INTO `members` (`id`, `username`, `password`, `email`, `verified`, `mod_timestamp`) VALUES
+('1483890783586d160e5a579', 'bmoses088', '$2y$10$wkhdHBawC85zZDuvvqNNE.ckBfNtFH/CH7XRMclqfokJQpb61URNS', 'bmoses088@gmail.com', 1, '2017-01-04 15:34:38'),
+('2003184615586d12fdd9144', 'Ashish1', '$2y$10$Nc3kAfsXk6oIPbK8vMWgbuxZNbXSfg3jzGiKG.oLG82EE17GKz0Vi', 'ashish1@gmail.com', 1, '2017-01-04 15:21:34'),
+('803040535586d12d319fac', 'Ashish', '$2y$10$Amfk/2k.gCOveCxSTK2mGu7ba.6t.6KZO/SDy4L.WekXMoZi2Fgsy', 'ashish@gmail.com', 1, '2017-01-04 15:20:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_activity`
+--
+
+CREATE TABLE `system_activity` (
+  `logid` int(11) NOT NULL,
+  `activity_type` enum('insert','update','delete','download','enable','disable','cancel','reported','approve','request','publish','unpublish','select') NOT NULL COMMENT 'If the record being inserted, updated, or deleted',
+  `subject_id` int(11) NOT NULL COMMENT 'This will store the ID which the record relates to',
+  `activity_description` varchar(200) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `activity_datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `activity_ipaddress` varchar(15) NOT NULL,
+  `activity_pagemetatitle` varchar(200) NOT NULL,
+  `activity_pageurl` varchar(200) NOT NULL,
+  `activity_pagereferer` varchar(200) NOT NULL,
+  `activity_pagehttp` tinytext NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `system_activity`
+--
+
+INSERT INTO `system_activity` (`logid`, `activity_type`, `subject_id`, `activity_description`, `user_id`, `activity_datetime`, `activity_ipaddress`, `activity_pagemetatitle`, `activity_pageurl`, `activity_pagereferer`, `activity_pagehttp`) VALUES
+(0, 'update', 0, 'Login: Register', 0, '2017-01-04 10:22:16', '67.247.1.65', '', 'https://phonebook.hdvbx.com/includes/index-query.php', 'https://phonebook.hdvbx.com/register/', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'),
+(0, 'select', 0, 'Login: Invalid', 0, '2017-01-04 10:23:46', '67.247.1.65', '', 'https://phonebook.hdvbx.com/includes/index-query.php', 'https://phonebook.hdvbx.com/', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'),
+(0, 'select', 0, 'Login: Not Verified', 0, '2017-01-04 10:23:50', '67.247.1.65', '', 'https://phonebook.hdvbx.com/includes/index-query.php', 'https://phonebook.hdvbx.com/', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'),
+(0, 'update', 0, 'Login: Success', 0, '2017-01-04 10:27:36', '67.247.1.65', '', 'https://phonebook.hdvbx.com/includes/index-query.php', 'https://phonebook.hdvbx.com/', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'),
+(0, 'update', 0, 'Login: Success', 0, '2017-01-04 14:13:49', '67.247.1.65', '', 'https://phonebook.hdvbx.com/includes/index-query.php', 'https://phonebook.hdvbx.com/', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'),
+(0, 'update', 0, 'Login: Success', 0, '2017-01-04 22:48:03', '67.247.1.65', '', 'https://phonebook.hdvbx.com/includes/index-query.php', 'https://phonebook.hdvbx.com/', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'),
+(0, 'update', 0, 'Login: Register', 0, '2017-01-05 23:41:43', '127.0.0.1', '', '', 'http://127.0.0.1:97/register', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'),
+(0, 'update', 0, 'Login: Success', 0, '2017-01-05 23:44:06', '127.0.0.1', '', '', 'http://127.0.0.1:97/', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system_syncservices`
+--
+
+CREATE TABLE `system_syncservices` (
+  `service_id` int(11) NOT NULL,
+  `service_name` varchar(50) NOT NULL,
+  `socialinviter_name` varchar(20) NOT NULL,
+  `api_key` varchar(255) NOT NULL,
+  `api_keysecret` varchar(255) NOT NULL,
+  `service_status` tinyint(1) NOT NULL,
+  `fa_icon_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `system_syncservices`
+--
+
+INSERT INTO `system_syncservices` (`service_id`, `service_name`, `socialinviter_name`, `api_key`, `api_keysecret`, `service_status`, `fa_icon_name`) VALUES
+(1, 'Gmail', 'gmail', '735350530224-bjacjr9acle4nn82kahvlg6faadeanc9.apps.googleusercontent.com', 'yQQhLnYbkvWzbcMuZoWqRIB3', 1, 'fa-google'),
+(2, 'Yahoo', 'yahoo', 'dj0yJmk9d1piMTJzVHdVOVNuJmQ9WVdrOVZFWm5WR3h4TkdFbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD0xYg--', '92851fe661dd60b82e5539d4e6c81e28fd3e8f1f', 1, 'fa-yahoo'),
+(3, 'Outlook', 'outlook', '00000000481C0BC0', 'x5QMcRDOfLzPHEMiaWS0xSy', 1, 'fa-windows'),
+(4, 'AOL', 'aol', '', '', 1, ''),
+(5, 'CSV', 'csv', '', '', 1, 'fa-file-excel-o'),
+(6, 'MailChimp', 'mailchimp', '136651455378', 'e6474a3edb4caae43562d56f7a56d46f', 1, ''),
+(7, 'Mailru', 'mailru', '', '', 0, ''),
+(8, 'Yammer', 'yammer', '', '', 0, ''),
+(9, 'Box', 'box', '', '', 0, ''),
+(10, 'Eventbrite', 'eventbrite', 'WR4KDHJB3YVJTITC7NKAM2QE3I7PM3MKZ4IVVHJYCWQNH6JMKT', '3VQ4CGUBWVCNWSJKLDKA', 1, ''),
+(11, 'Email', 'email', '', '', 1, 'fa-envelope');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `world_country`
+--
+
+CREATE TABLE `world_country` (
+  `id` int(11) NOT NULL,
+  `iso2` char(50) DEFAULT NULL,
+  `iso3` char(50) DEFAULT NULL,
+  `continent` int(11) NOT NULL DEFAULT '0' COMMENT '1=Africa, 2=Asia, 3=Europe, 4=North America, 5=South America, 6= Australia',
+  `country` char(250) CHARACTER SET utf8 NOT NULL,
+  `currency_id` int(11) NOT NULL,
+  `latitude` float(10,6) NOT NULL,
+  `longitude` float(10,6) NOT NULL,
+  `call_countrycode` varchar(15) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `world_country`
+--
+
+INSERT INTO `world_country` (`id`, `iso2`, `iso3`, `continent`, `country`, `currency_id`, `latitude`, `longitude`, `call_countrycode`) VALUES
+(1, 'AF', 'AFG', 2, 'Afghanistan', 0, 33.939110, 67.709953, '93'),
+(4, 'DZ', 'DZA', 1, 'Algeria', 0, 36.752888, 3.042048, '213'),
+(3, 'AL', 'ALB', 3, 'Albania', 0, 41.153332, 20.168331, '355'),
+(6, 'AD', 'AND', 3, 'Andorra', 1, 42.546246, 1.601554, '376'),
+(7, 'AO', 'AGO', 1, 'Angola', 0, -11.202692, 17.873886, '244'),
+(10, 'AG', 'ATG', 4, 'Antigua And Barbuda', 0, 17.060816, -61.796429, '1-268'),
+(11, 'AR', 'ARG', 5, 'Argentina', 0, -38.416096, -63.616673, '54'),
+(12, 'AM', 'ARM', 3, 'Armenia', 0, 40.069099, 45.038189, '374'),
+(13, 'AW', 'ABW', 4, 'Aruba', 0, 12.521110, -69.968338, '297'),
+(14, 'AU', 'AUS', 6, 'Australia', 0, -25.274399, 133.775131, '61'),
+(15, 'AT', 'AUT', 3, 'Austria', 1, 47.516232, 14.550072, '43'),
+(16, 'AZ', 'AZE', 3, 'Azerbaijan', 0, 40.143105, 47.576927, '994'),
+(17, 'BS', 'BHS', 4, 'Bahamas', 0, 25.034281, -77.396278, '1-242'),
+(18, 'BH', 'BHR', 2, 'Bahrain', 0, 25.930414, 50.637772, '973'),
+(19, 'BD', 'BGD', 2, 'Bangladesh', 0, 23.684994, 90.356331, '880'),
+(20, 'BB', 'BRB', 4, 'Barbados', 0, 13.193887, -59.543198, '1-246'),
+(21, 'BY', 'BLR', 3, 'Belarus', 0, 53.709808, 27.953388, '375'),
+(22, 'BE', 'BEL', 3, 'Belgium', 1, 50.503887, 4.469936, '32'),
+(23, 'BZ', 'BLZ', 4, 'Belize', 0, 17.189877, -88.497650, '501'),
+(24, 'BJ', 'BEN', 1, 'Benin', 0, 9.307690, 2.315834, '229'),
+(26, 'BT', 'BTN', 2, 'Bhutan', 0, 27.514162, 90.433601, '975'),
+(27, 'BO', 'BOL', 5, 'Bolivia', 0, -16.290154, -63.588654, '591'),
+(28, 'BA', 'BIH', 3, 'Bosnia And Herzegovina', 0, 43.915886, 17.679075, '387'),
+(29, 'BW', 'BWA', 1, 'Botswana', 0, -22.328474, 24.684866, '267'),
+(31, 'BR', 'BRA', 5, 'Brazil', 0, -14.235004, -51.925282, '55'),
+(33, 'BN', 'BRN', 2, 'Brunei Darussalam', 0, 4.535277, 114.727669, '673'),
+(34, 'BG', 'BGR', 3, 'Bulgaria', 0, 42.733883, 25.485830, '359'),
+(35, 'BF', 'BFA', 1, 'Burkina Faso', 0, 12.238333, -1.561593, '226'),
+(36, 'BI', 'BDI', 1, 'Burundi', 0, -3.373056, 29.918886, '257'),
+(37, 'KH', 'KHM', 2, 'Cambodia', 0, 12.565679, 104.990967, '855'),
+(38, 'CM', 'CMR', 1, 'Cameroon', 0, 7.369722, 12.354722, '237'),
+(39, 'CA', 'CAN', 4, 'Canada', 0, 56.130367, -106.346771, '1'),
+(40, 'CV', 'CPV', 1, 'Cape Verde', 0, 16.002083, -24.013197, '238'),
+(41, 'KY', 'CYM', 4, 'Cayman Islands', 0, 19.513470, -80.566956, '1-345'),
+(42, 'CF', 'CAF', 1, 'Central African Republic', 0, 6.611111, 20.939444, '236'),
+(43, 'TD', 'TCD', 1, 'Chad (tchad)', 0, 15.454166, 18.732206, '235'),
+(44, 'CL', 'CHL', 5, 'Chile', 0, -35.675148, -71.542969, '56'),
+(45, 'CN', 'CHN', 2, 'China', 0, 35.861660, 104.195396, '86'),
+(48, 'CO', 'COL', 5, 'Colombia', 0, 4.570868, -74.297333, '57'),
+(49, 'KM', 'COM', 1, 'Comoros', 0, -11.875001, 43.872219, '269'),
+(50, 'CG', 'COG', 1, 'Congo (Republic Of)', 0, -4.400000, 15.400000, '242'),
+(51, 'CD', 'COD', 1, 'Congo (The Democratic Republic Of)', 0, -4.713680, 14.890707, '243'),
+(53, 'CR', 'CRI', 4, 'Costa Rica', 0, 9.748917, -83.753426, '506'),
+(54, 'CI', 'CIV', 1, 'Cote d''Ivoire (ivory Coast)', 0, 7.539989, -5.547080, '225'),
+(55, 'HR', 'HRV', 3, 'Croatia (hrvatska)', 0, 45.099998, 15.200000, '385'),
+(56, 'CU', 'CUB', 4, 'Cuba', 0, 21.521757, -77.781166, '53'),
+(57, 'CY', 'CYP', 3, 'Cyprus', 1, 35.126411, 33.429859, '357'),
+(58, 'CZ', 'CZE', 3, 'Czech Republic', 0, 49.817493, 15.472962, '420'),
+(59, 'DK', 'DNK', 3, 'Denmark', 0, 56.263920, 9.501785, '45'),
+(60, 'DJ', 'DJI', 1, 'Djibouti', 0, 11.825138, 42.590275, '253'),
+(61, 'DM', 'DMA', 4, 'Dominica', 0, 15.414999, -61.370975, '1-767'),
+(62, 'DO', 'DOM', 4, 'Dominican Republic', 0, 18.735693, -70.162651, '1-8091-8291-849'),
+(63, 'EC', 'ECU', 5, 'Ecuador', 0, -1.831239, -78.183403, '593'),
+(64, 'EG', 'EGY', 1, 'Egypt', 0, 26.820553, 30.802498, '20'),
+(65, 'SV', 'SLV', 4, 'El Salvador', 0, 13.794185, -88.896530, '503'),
+(66, 'GQ', 'GNQ', 1, 'Equatorial Guinea', 0, 1.650801, 10.267895, '240'),
+(67, 'ER', 'ERI', 1, 'Eritrea', 0, 15.179384, 39.782333, '291'),
+(68, 'EE', 'EST', 3, 'Estonia', 1, 58.595272, 25.013607, '372'),
+(69, 'ET', 'ETH', 1, 'Ethiopia', 0, 9.145000, 40.489674, '251'),
+(72, 'FJ', 'FJI', 6, 'Fiji', 0, -16.578194, 179.414413, '679'),
+(73, 'FI', 'FIN', 3, 'Finland', 1, 61.924110, 25.748152, '358'),
+(74, 'FR', 'FRA', 3, 'France', 1, 46.227638, 2.213749, '33'),
+(78, 'GA', 'GAB', 1, 'Gabon', 0, -0.803689, 11.609444, '241'),
+(79, 'GM', 'GMB', 1, 'Gambia', 0, 13.443182, -15.310139, '220'),
+(80, 'GE', 'GEO', 3, 'Georgia', 0, 32.157436, -82.907120, '995'),
+(81, 'DE', 'DEU', 3, 'Germany', 0, 51.165691, 10.451526, '49'),
+(82, 'GH', 'GHA', 1, 'Ghana', 0, 7.946527, -1.023194, '233'),
+(83, 'GI', 'GIB', 3, 'Gibraltar', 0, 36.137741, -5.345374, '350'),
+(85, 'GR', 'GRC', 3, 'Greece', 1, 39.074207, 21.824312, '30'),
+(87, 'GD', 'GRD', 4, 'Grenada', 0, 12.262776, -61.604172, '1-473'),
+(90, 'GT', 'GTM', 4, 'Guatemala', 0, 15.783471, -90.230759, '502'),
+(91, 'GN', 'GIN', 1, 'Guinea', 0, 9.945587, -9.696645, '224'),
+(92, 'GW', 'GNB', 1, 'Guinea-bissau', 0, 11.803749, -15.180413, '245'),
+(93, 'GY', 'GUY', 5, 'Guyana', 0, 4.860416, -58.930180, '592'),
+(94, 'HT', 'HTI', 4, 'Haiti', 0, 18.971188, -72.285217, '509'),
+(96, 'HN', 'HND', 4, 'Honduras', 0, 15.199999, -86.241905, '504'),
+(97, 'HK', 'HKG', 2, 'Hong Kong (special Administrative Region Of China)', 0, 22.396427, 114.109497, '852'),
+(98, 'HU', 'HUN', 3, 'Hungary', 0, 47.162495, 19.503304, '36'),
+(99, 'IS', 'ISL', 3, 'Iceland', 0, 64.963051, -19.020836, '354'),
+(100, 'IN', 'IND', 2, 'India', 0, 20.593683, 78.962883, '91'),
+(101, 'ID', 'IDN', 2, 'Indonesia', 0, -0.789275, 113.921326, '62'),
+(102, 'IR', 'IRN', 2, 'Iran', 0, 36.288857, 59.614380, '98'),
+(103, 'IQ', 'IRQ', 2, 'Iraq', 0, 33.223190, 43.679291, '964'),
+(104, 'IE', 'IRL', 3, 'Ireland', 1, 53.412910, -8.243890, '353'),
+(105, 'IL', 'ISR', 2, 'Israel', 2, 31.046051, 34.851612, '972'),
+(106, 'IT', 'ITA', 3, 'Italy', 1, 41.871941, 12.567380, '39'),
+(107, 'JM', 'JAM', 4, 'Jamaica', 0, 18.109581, -77.297508, '1-876'),
+(108, 'JP', 'JPN', 2, 'Japan', 0, 36.204823, 138.252930, '81'),
+(109, 'JO', 'JOR', 2, 'Jordan', 0, 30.585163, 36.238415, '962'),
+(110, 'KZ', 'KAZ', 2, 'Kazakhstan', 0, 48.019573, 66.923683, '7'),
+(111, 'KE', 'KEN', 1, 'Kenya', 0, -0.023559, 37.906193, '254'),
+(112, 'KI', 'KIR', 6, 'Kiribati', 0, -3.370417, -168.734039, '686'),
+(113, 'KP', 'PRK', 2, 'Korea (democratic Peoples Republic Of North Korea)', 0, 37.942028, -83.478516, '850'),
+(114, 'KR', 'KOR', 2, 'Korea (Republic Of South Korea)', 0, 37.585693, 126.976074, '82'),
+(115, 'KW', 'KWT', 2, 'Kuwait', 0, 29.311661, 47.481766, '965'),
+(116, 'KG', 'KGZ', 2, 'Kyrgyzstan', 0, 41.204380, 74.766098, '996'),
+(117, 'LA', 'LAO', 1, 'Laos', 0, 19.856270, 102.495499, '856'),
+(118, 'LV', 'LVA', 3, 'Latvia', 0, 56.879635, 24.603189, '371'),
+(119, 'LB', 'LBN', 2, 'Lebanon', 0, 33.854721, 35.862286, '961'),
+(120, 'LS', 'LSO', 1, 'Lesotho', 0, -29.609987, 28.233608, '266'),
+(121, 'LR', 'LBR', 1, 'Liberia', 0, 6.428055, -9.429499, '231'),
+(122, 'LY', 'LBY', 1, 'Libya', 0, 26.335100, 17.228331, '218'),
+(123, 'LI', 'LIE', 3, 'Liechtenstein', 0, 47.166000, 9.555373, '423'),
+(124, 'LT', 'LTU', 3, 'Lithuania', 0, 55.169437, 23.881275, '370'),
+(125, 'LU', 'LUX', 3, 'Luxembourg', 1, 49.815273, 6.129583, '352'),
+(126, 'MO', 'MAC', 2, 'Macao (special Administrative Region Of China)', 0, 22.198746, 113.543877, '853'),
+(127, 'MK', 'MKD', 3, 'Macedonia', 0, 41.608635, 21.745275, '389'),
+(128, 'MG', 'MDG', 1, 'Madagascar', 0, -18.766947, 46.869106, '261'),
+(129, 'MW', 'MWI', 1, 'Malawi', 0, -13.254308, 34.301525, '265'),
+(130, 'MY', 'MYS', 2, 'Malaysia', 0, 4.210484, 101.975769, '60'),
+(131, 'MV', 'MDV', 2, 'Maldives', 0, 3.202778, 73.220680, '960'),
+(132, 'ML', 'MLI', 1, 'Mali', 0, 17.570692, -3.996166, '223'),
+(133, 'MT', 'MLT', 3, 'Malta', 1, 35.937496, 14.375416, '356'),
+(134, 'MH', 'MHL', 6, 'Marshall Islands', 0, 7.131474, 171.184479, '692'),
+(136, 'MR', 'MRT', 1, 'Mauritania', 0, 21.007891, -10.940835, '222'),
+(137, 'MU', 'MUS', 1, 'Mauritius', 0, -20.348404, 57.552151, '230'),
+(139, 'MX', 'MEX', 4, 'Mexico', 0, 23.634501, -102.552788, '52'),
+(140, 'FM', 'FSM', 6, 'Micronesia', 0, 8.162320, 148.205505, '691'),
+(141, 'MD', 'MDA', 3, 'Moldova', 0, 47.411633, 28.369884, '373'),
+(142, 'MC', 'MCO', 3, 'Monaco', 1, 43.750298, 7.412841, '377'),
+(143, 'MN', 'MNG', 2, 'Mongolia', 0, 46.862495, 103.846657, '976'),
+(144, 'MS', 'MSR', 4, 'Montserrat', 0, 16.742498, -62.187366, '1-664'),
+(145, 'MA', 'MAR', 1, 'Morocco', 0, 31.791702, -7.092620, '212'),
+(146, 'MZ', 'MOZ', 1, 'Mozambique', 0, -18.665695, 35.529564, '258'),
+(147, 'MM', 'MMR', 2, 'Myanmar (formerly Burma)', 0, 21.913965, 95.956223, '95'),
+(148, 'NA', 'NAM', 1, 'Namibia', 0, -22.957640, 18.490410, '264'),
+(149, 'NR', 'NRU', 6, 'Nauru', 0, -0.522778, 166.931503, '674'),
+(150, 'NP', 'NPL', 2, 'Nepal', 0, 28.394857, 84.124008, '977'),
+(151, 'NL', 'NLD', 3, 'Netherlands', 1, 52.132633, 5.291266, '31'),
+(154, 'NZ', 'NZL', 6, 'New Zealand', 0, -40.900558, 174.885971, '64'),
+(155, 'NI', 'NIC', 4, 'Nicaragua', 0, 12.865416, -85.207230, '505'),
+(156, 'NE', 'NER', 1, 'Niger', 0, 17.607788, 8.081666, '227'),
+(157, 'NG', 'NGA', 1, 'Nigeria', 0, 9.081999, 8.675277, '234'),
+(160, 'MP', 'MNP', 6, 'Northern Mariana Islands', 0, 17.330830, 145.384689, '1-670'),
+(161, 'NO', 'NOR', 3, 'Norway', 0, 60.472023, 8.468946, '47'),
+(162, 'OM', 'OMN', 2, 'Oman', 0, 21.512583, 55.923256, '968'),
+(163, 'PK', 'PAK', 2, 'Pakistan', 0, 30.375320, 69.345116, '92'),
+(164, 'PW', 'PLW', 6, 'Palau', 0, 7.514980, 134.582520, '680'),
+(166, 'PA', 'PAN', 4, 'Panama', 0, 8.537981, -80.782127, '507'),
+(167, 'PG', 'PNG', 2, 'Papua New Guinea', 0, -6.314993, 143.955551, '675'),
+(168, 'PY', 'PRY', 5, 'Paraguay', 0, -23.442503, -58.443832, '595'),
+(169, 'PE', 'PER', 5, 'Peru', 0, -9.189967, -75.015152, '51'),
+(170, 'PH', 'PHL', 2, 'Philippines', 0, 12.879721, 121.774017, '63'),
+(171, 'PN', 'PCN', 6, 'Pitcairn', 0, -24.703615, -127.439308, '870'),
+(172, 'PL', 'POL', 3, 'Poland', 0, 51.919437, 19.145136, '48'),
+(173, 'PT', 'PRT', 3, 'Portugal', 1, 39.399872, -8.224454, '351'),
+(174, 'PR', 'PRI', 4, 'Puerto Rico', 0, 18.220833, -66.590149, '1'),
+(175, 'QA', 'QAT', 2, 'Qatar', 0, 25.354826, 51.183884, '974'),
+(177, 'RO', 'ROU', 3, 'Romania', 0, 45.943161, 24.966761, '40'),
+(178, 'RU', 'RUS', 3, 'Russian Federation', 0, 61.524010, 105.318756, '7'),
+(179, 'RW', 'RWA', 1, 'Rwanda', 0, -1.940278, 29.873888, '250'),
+(180, 'SH', 'SHN', 4, 'Saint Helena', 0, -24.143475, -10.030696, '290 n'),
+(181, 'KN', 'KNA', 4, 'Saint Kitts And Nevis', 0, 17.357822, -62.782997, '1-869'),
+(182, 'LC', 'LCA', 4, 'Saint Lucia', 0, 13.909444, -60.978893, '1-758'),
+(183, 'PM', 'SPM', 4, 'Saint Pierre And Miquelon', 0, 46.941936, -56.271111, '508'),
+(184, 'VC', 'VCT', 4, 'Saint Vincent And The Grenadines', 0, 12.984305, -61.287228, '1-784'),
+(185, 'WS', 'WSM', 6, 'Samoa (formerly Western Samoa)', 0, -34.861893, 138.494980, '685'),
+(186, 'SM', 'SMR', 3, 'San Marino (republic Of)', 0, 33.695824, -117.901443, '378'),
+(187, 'ST', 'STP', 1, 'Sao Tome And Principe', 0, 0.186360, 6.613081, '239'),
+(188, 'SA', 'SAU', 2, 'Saudi Arabia', 0, 24.711390, 46.674442, '966'),
+(189, 'SN', 'SEN', 1, 'Senegal', 0, 14.497401, -14.452362, '221'),
+(190, 'CS', 'SCG', 3, 'Serbia And Montenegro (formerly Yugoslavia)', 0, 44.480000, 20.280001, NULL),
+(191, 'SC', 'SYC', 1, 'Seychelles', 0, -4.679574, 55.491978, '248'),
+(192, 'SL', 'SLE', 1, 'Sierra Leone', 0, 8.460555, -11.779889, '232'),
+(193, 'SG', 'SGP', 2, 'Singapore', 0, 1.352083, 103.819839, '65'),
+(194, 'SK', 'SVK', 3, 'Slovakia (slovak Republic)', 0, 48.144722, 17.112778, '421'),
+(195, 'SI', 'SVN', 3, 'Slovenia', 1, 46.151241, 14.995463, '386'),
+(196, 'SB', 'SLB', 6, 'Solomon Islands', 0, -9.645710, 160.156189, '677'),
+(197, 'SO', 'SOM', 1, 'Somalia', 0, 5.152149, 46.199615, '252'),
+(198, 'ZA', 'ZAF', 1, 'South Africa', 0, -30.559483, 22.937506, '27'),
+(200, 'ES', 'ESP', 3, 'Spain', 0, 40.463669, -3.749220, '34'),
+(201, 'LK', 'LKA', 2, 'Sri Lanka', 0, 7.873054, 80.771797, '94'),
+(202, 'SD', 'SDN', 1, 'Sudan', 0, 12.862807, 30.217636, '249'),
+(203, 'SR', 'SUR', 5, 'Suriname', 0, 3.919305, -56.027782, '597'),
+(205, 'SZ', 'SWZ', 1, 'Swaziland', 0, -26.522503, 31.465866, '268'),
+(206, 'SE', 'SWE', 3, 'Sweden', 0, 60.128162, 18.643501, '46'),
+(207, 'CH', 'CHE', 3, 'Switzerland', 0, 46.818188, 8.227512, '41'),
+(209, 'TW', 'TWN', 2, 'Taiwan', 0, 23.697809, 120.960518, '886'),
+(210, 'TJ', 'TJK', 2, 'Tajikistan', 0, 38.861034, 71.276093, '992'),
+(211, 'TZ', 'TZA', 1, 'Tanzania', 0, -6.369028, 34.888821, '255'),
+(212, 'TH', 'THA', 2, 'Thailand', 0, 15.870032, 100.992538, '66'),
+(213, 'TL', 'TLS', 2, 'Timor-Leste', 0, -9.862795, 124.331039, '670'),
+(214, 'TG', 'TGO', 1, 'Togo', 0, 8.619543, 0.824782, '228'),
+(215, 'TK', 'TKL', 6, 'Tokelau', 0, -8.967363, -171.855881, '690'),
+(216, 'TO', 'TON', 6, 'Tonga', 0, -21.178986, -175.198242, '676'),
+(217, 'TT', 'TTO', 4, 'Trinidad And Tobago', 0, 10.691803, -61.222504, '1-868'),
+(218, 'TN', 'TUN', 1, 'Tunisia', 0, 33.886917, 9.537499, '216'),
+(219, 'TR', 'TUR', 3, 'Turkey', 0, 38.963745, 35.243320, '90'),
+(220, 'TM', 'TKM', 2, 'Turkmenistan', 0, 38.969719, 59.556278, '993'),
+(222, 'TV', 'TUV', 6, 'Tuvalu', 0, -7.109535, 177.649323, '688'),
+(223, 'UG', 'UGA', 1, 'Uganda', 0, 1.373333, 32.290276, '256'),
+(224, 'UA', 'UKR', 3, 'Ukraine', 0, 48.379433, 31.165581, '380'),
+(225, 'AE', 'ARE', 2, 'United Arab Emirates', 0, 23.424076, 53.847816, '971'),
+(226, 'GB', 'GBR', 3, 'United Kingdom', 3, 55.378052, -3.435973, '44'),
+(227, 'US', 'USA', 4, 'United States', 4, 37.090240, -95.712891, '1'),
+(229, 'UY', 'URY', 5, 'Uruguay', 0, -32.522778, -55.765835, '598'),
+(230, 'UZ', 'UZB', 2, 'Uzbekistan', 0, 41.377491, 64.585258, '998'),
+(231, 'VU', 'VUT', 6, 'Vanuatu', 0, -15.376706, 166.959152, '678'),
+(232, 'VA', 'VAT', 3, 'Vatican City (holy See)', 0, 41.902916, 12.453389, '39-06'),
+(233, 'VE', 'VEN', 5, 'Venezuela', 0, 6.423750, -66.589729, '58'),
+(234, 'VN', 'VNM', 2, 'Viet Nam', 0, 14.058324, 108.277199, '84'),
+(239, 'YE', 'YEM', 2, 'Yemen', 0, 32.886513, 13.197371, '967'),
+(240, 'ZM', 'ZMB', 1, 'Zambia', 0, -13.133897, 27.849333, '260'),
+(241, 'ZW', 'ZWE', 1, 'Zimbabwe', 0, -19.015438, 29.154858, '263'),
+(305, 'BN', 'BRU', 2, 'Brunei', 0, 4.535277, 114.727669, '257'),
+(308, 'PC', 'PRC', 2, 'People''s Republic of China2', 0, 22.907724, 104.877464, '86'),
+(309, 'RC', 'ROC', 2, 'Republic of China1', 0, 22.905676, 121.115852, '86'),
+(310, 'SY', 'SYR', 2, 'Syria', 0, 34.802074, 38.996815, '963'),
+(312, 'ME', 'MTO', 3, 'Montenegro', 1, 42.708679, 19.374390, '356'),
+(313, 'RS', 'RSA', 3, 'Russia', 0, 61.524010, 105.318756, '381 p'),
+(314, 'RS', 'SBA', 3, 'Serbia', 0, 44.016521, 21.005859, '677');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`client_id`);
+
+--
+-- Indexes for table `client_contacts`
+--
+ALTER TABLE `client_contacts`
+  ADD PRIMARY KEY (`contact_id`);
+
+--
+-- Indexes for table `client_services`
+--
+ALTER TABLE `client_services`
+  ADD PRIMARY KEY (`linkedservice_id`);
+
+--
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `loginattempts`
+--
+ALTER TABLE `loginattempts`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username_UNIQUE` (`username`),
+  ADD UNIQUE KEY `id_UNIQUE` (`id`),
+  ADD UNIQUE KEY `email_UNIQUE` (`email`);
+
+--
+-- Indexes for table `system_syncservices`
+--
+ALTER TABLE `system_syncservices`
+  ADD PRIMARY KEY (`service_id`);
+
+--
+-- Indexes for table `world_country`
+--
+ALTER TABLE `world_country`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`),
+  ADD KEY `country` (`country`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `client_contacts`
+--
+ALTER TABLE `client_contacts`
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `client_services`
+--
+ALTER TABLE `client_services`
+  MODIFY `linkedservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+--
+-- AUTO_INCREMENT for table `loginattempts`
+--
+ALTER TABLE `loginattempts`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `system_syncservices`
+--
+ALTER TABLE `system_syncservices`
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `world_country`
+--
+ALTER TABLE `world_country`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=315;

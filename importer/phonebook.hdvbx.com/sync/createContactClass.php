@@ -1,28 +1,31 @@
 <?php
-
-class NewContact
+include 'dbconn.php';
+class NewContact extends DbConn
 {
     public function createContact($service,$data)
     {
         try {
-            global $db;
+            $db = new DbConn;
             $tbl_contacts = $db->tbl_contacts;
             $id = 0;
             $dob = $data['birthday']['month']."-".$data['birthday']['day']."-".$data['birthday']['year'];
             // prepare sql and bind parameters
-            $stmt = $db->conn->prepare("INSERT INTO client_contacts (client_id, service, first_name, last_name, email, address, dob, phone, imageurl, website, notes)
-            VALUES (:client_id, :service, :first_name, :last_name, :email, :address1, :address2, :dob, :phone, :imageurl, :website, :notes)");
+            $stmt = $db->conn->prepare("INSERT INTO client_contacts (client_id, service, first_name, last_name, email, address, dob, phone, imageurl, website, notes,last_modified)
+            VALUES (:client_id, :service, :first_name, :last_name, :email, :address1, :dob, :phone, :imageurl, :website, :notes,:last_modified)");
+            
             $stmt->bindParam(':client_id', $_SESSION['client']['client_id']);
-			$stmt->bindParam(':service', $service);
+            $stmt->bindParam(':service', $service);
             $stmt->bindParam(':first_name', ($data['name']['first_name'])?$data['name']['first_name']:"");
             $stmt->bindParam(':last_name', ($data['name']['last_name'])?$data['name']['last_name']:"");
             $stmt->bindParam(':email', ($data['email'][0])?$data['email'][0]:"");
-            $stmt->bindParam(':address', (isset($data['address'][0]))?$data['address'][0]:"");
+            $stmt->bindParam(':address1', (isset($data['address'][0]))?$data['address'][0]:"");
             $stmt->bindParam(':phone', (isset($data['phone'][0]))?$data['phone'][0]:"");
-			$stmt->bindParam(':imageurl', (isset($data['imageurl']))?$data['imageurl']:"");
-			$stmt->bindParam(':website', (isset($data['website']))?$data['website']:"");
+            $stmt->bindParam(':imageurl', (isset($data['imageurl']))?$data['imageurl']:"");
+            $stmt->bindParam(':website', (isset($data['website']))?$data['website']:"");
+            $stmt->bindParam(':notes', (isset($data['notes']))?$data['notes']:"");
             $stmt->bindParam(':dob', ($dob)?$dob:"");
-			$stmt->bindParam(':notes', (isset($data['notes']))?$data['notes']:"");
+            $stmt->bindParam(':notes', (isset($data['notes']))?$data['notes']:"");
+            $stmt->bindParam(':last_modified', date("Y-m-d H:i:s"));
 			//echo $stmt->queryString;exit;
             $stmt->execute();
 			
@@ -59,8 +62,8 @@ class NewContact
     
     public function getAllContacts($service = '',$export = false,$returnResult = false){
         error_reporting(0);
-        global $db;
-            $tbl_contacts = $db->tbl_contacts;
+        $db = new DbConn;
+            $tbl_contacts = "client_contacts";
             
             if($service){
                 $stmt = $db->conn->prepare("SELECT * FROM ".$tbl_contacts." WHERE client_id= :client_id AND service = :service");

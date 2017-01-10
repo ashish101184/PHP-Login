@@ -35,7 +35,7 @@
 		</tbody>
 	</table>
 	</div>
-	<? }else{
+	<?php }else{
 		print '<div class="alert alert-danger">There are no sync services enabled.</div>';
 	}
 	?>

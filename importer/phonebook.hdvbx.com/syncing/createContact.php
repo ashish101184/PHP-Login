@@ -11,7 +11,11 @@ foreach($addressbook as $contact){
         if($response){
             $addedCount++;
         }
+    }else{
+        $keys = array_keys($emails, $contact['email'][0]);
+        $a->updateContactLastModified($keys[0]);
     }
 }
+$a->updateClientServices($service);
 ?>
 

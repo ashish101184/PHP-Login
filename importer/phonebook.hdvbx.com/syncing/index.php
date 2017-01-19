@@ -30,13 +30,14 @@
                      contacts += ", "
                  }
 				 console.log(data);
+				 console.log("dddddd");
                  contacts += data[i].name.first_name + " " + data[i].name.last_name;
                  contacts += "< " + data[i].email[0] + " > ";
              }
 //             $("#txtloadedContacts").html(unescape(contacts));
              var postdata =  {action: "contacts",service:service,data:JSON.stringify(data)};
 			 $.post("processor.php", postdata, function (response) {
-				alert(response);
+				//alert(response);
 			 });
          }
          var storeSelectedContacts = function () {

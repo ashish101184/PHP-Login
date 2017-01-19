@@ -54,7 +54,7 @@
 	<li class="treeview">
 	  <a href="#"><i class="fa fa-refresh"></i> <span>Syncing</span> <i class="fa fa-angle-left pull-right"></i></a>
 	  <ul class="treeview-menu">
-		<li class="treeview"><a href="<?php print PATH_DOMAIN ?>/sync"><i class="fa fa-refresh"></i> <span>Syncing</span></a></li>
+		<li class="treeview"><a id="syncAll" href="<?php print PATH_DOMAIN ?>/sync"><i class="fa fa-refresh"></i> <span>Syncing</span></a></li>
 		<?php
 		$result = $db->query('
 		SELECT ss.service_id, ss.service_name, ss.socialinviter_name, ss.service_status, ss.fa_icon_name, cs.*
@@ -65,12 +65,12 @@
 			while($sql = $result->fetch_array(MYSQLI_BOTH)){
 				
 				//GET CONTACT COUNT
-				$contact_count = 0;
+				$contact_count = (isset($generalAllservies[$sql['socialinviter_name']])?$generalAllservies[$sql['socialinviter_name']]:0);
 				
 				if($sql['fa_icon_name'] == ''){ $fa_icon_name = ''; }else{ $fa_icon_name = $sql['fa_icon_name']; }
 				print '
 				<li class="treeview">
-					<a href="'.PATH_DOMAIN.'/sync/?service='.$sql['socialinviter_name'].'" title="Sync - '.$sql['socialinviter_name'].'">
+					<a id="torefresh_'.$sql['socialinviter_name'].'" href="'.PATH_DOMAIN.'/sync/?service='.$sql['socialinviter_name'].'" title="Sync - '.$sql['socialinviter_name'].'">
 						<i class="fa '.$sql['fa_icon_name'].'"></i> 
 						<span>'.$sql['service_name'].'</span>
 						<span class="label label-primary pull-right">'.$contact_count.'</span>

@@ -3,12 +3,18 @@
 if(!isset($_GET['service']) || $_GET['service'] == ''){
 	$pagename = "Sync";
 }else{
-	$result = $db->query('SELECT * FROM system_syncservices WHERE socialinviter_name = "'.htmlentities($_GET['service']).'" AND service_status = 1');
+	$result = $db->query('SELECT ss.*, cs.lastsync, cs.authkey FROM system_syncservices ss
+	LEFT JOIN client_services cs ON ss.service_id = cs.service_id AND cs.client_id="'.$_SESSION['client']['client_id'].'"
+	WHERE ss.socialinviter_name = "'.htmlentities($_GET['service']).'" AND ss.service_status = 1
+	');
 	$service_exists = $result->num_rows;
 	if($service_exists > 0){
 		$service = $result->fetch_array(MYSQLI_BOTH);
 		if($service['fa_icon_name'] == ''){ $fa_icon_name = ''; }else{ $fa_icon_name = $service['fa_icon_name']; }
 		$pagename = "Sync - ".$service['service_name'];
+	}else{
+		include('index-invalidurl.php');
+		exit;
 	}
 }
 
@@ -45,13 +51,13 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
 		<tbody>
 			<?php while($sql = $result->fetch_array(MYSQLI_BOTH)){
 				if($sql['fa_icon_name'] == ''){ $fa_icon_name = ''; }else{ $fa_icon_name = $sql['fa_icon_name']; }
-				$url = PATH_DOMAIN.'/export.php?#';
+				$url = PATH_DOMAIN.'/export/?'.$sql['authkey'];
 				print '<tr>
 					<td><i class="fa '.$fa_icon_name.'"></i></td>
 					<td><a href="'.PATH_DOMAIN.'/sync/?service='.$sql['socialinviter_name'].'" class="dynaload">'.$sql['service_name'].'</a></td>
 					<td>'.$sql['lastsync'].'</td>
 					<td><a href="'.$url.'">'.$url.'</a></td>
-					<td>'.$sql['contact_count'].'</td>
+					<td>'.(isset($generalAllservies[$sql['socialinviter_name']])?$generalAllservies[$sql['socialinviter_name']]:0).'</td>
 					<td>
 						<button type="button" class="btn btn-xs btn-primary" title="Authenticate" onclick="socialinviter.contactimporter.auth(\''.$sql['socialinviter_name'].'\')"><i class="fa fa-fw fa-play"></i>&nbsp;&nbsp;Sync Now</button>
 					</td>
@@ -85,12 +91,13 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
 		</thead>
 		<tbody>
 			<?php 
+				$url = PATH_DOMAIN.'/export/?'.$service['authkey'];
 				print '<tr>
 					<td><i class="fa '.$service['fa_icon_name'].'"></i></td>
 					<td>'.$service['service_name'].'</td>
 					<td>'.$service['lastsync'].'</td>
 					<td><a href="'.$url.'">'.$url.'</a></td>
-					<td>'.$service['contact_count'].'</td>
+					<td>'.(isset($generalAllservies[$service['socialinviter_name']])?$generalAllservies[$service['socialinviter_name']]:0).'</td>
 					<td>
 						<button type="button" class="btn btn-xs btn-primary" title="Authenticate" onclick="socialinviter.contactimporter.auth(\''.$service['socialinviter_name'].'\')"><i class="fa fa-fw fa-play"></i>&nbsp;&nbsp;Sync Now</button>
 					</td>
@@ -119,19 +126,28 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
 			</tr>
 		</thead>
 		<tbody>
-			<?php 
-				print '<tr>
+            <?php while($sql = $result->fetch_array(MYSQLI_BOTH)){
+				if($sql['imageurl']!=''){
+					$url = PATH_DOMAIN.'/contacts/'.$sql['client_id'].'/'.$sql['contact_id'].'.jpg';
+					if(file_exists($url)){
+						$imageurl = '<a href="'.$sql['imageurl'].'" target="_new"><img src="'.$url.'" class="img-responsive" /></a>';
+					}else{ $url = ''; }
+				}else{
+					$url = ''; $imageurl = '';
+				}
+			print '<tr>
 					<td>'.$sql['first_name'].'</td>
 					<td>'.$sql['last_name'].'</td>
 					<td>'.$sql['email'].'</td>
 					<td>'.$sql['address'].'</td>
 					<td>'.$sql['dob'].'</td>
 					<td>'.$sql['phone'].'</td>
-					<td>'.$sql['imageurl'].'</td>
+					<td>'.$imageurl.'</td>
 					<td>'.$sql['website'].'</td>
 					<td>'.$sql['notes'].'</td>
+                    <td>'.$sql['last_modified'].'</td>
 				</tr>';
-			?>
+			} ?>
 		</tbody>
 	</table>
 	</div>
@@ -145,6 +161,7 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
 
 <script type="text/javascript">
          var storeImportedContacts = function (service,data) {
+             console.log(socialinviter);
 			var len = data.length;
              var contacts = "";
              for (var i = 0; i < len; i++) {
@@ -157,8 +174,18 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
              }
 //             $("#txtloadedContacts").html(unescape(contacts));
              var postdata =  {action: "contacts",service:service,data:JSON.stringify(data)};
-			 $.post("<?php print PATH_DOMAIN ?>/sync/processor.php", postdata, function (response) {
-				alert(response);
+			 $.post("<?php print PATH_DOMAIN ?>/syncing/processor.php", postdata, function (response) {
+				<?php 
+                                if($_GET['service']){
+                                    ?>                                                
+                                    window.location = "<?php print PATH_DOMAIN ?>/sync/?service="+service;
+                                <?php 
+                                }else{ 
+                                ?>
+                                    window.location = "<?php print PATH_DOMAIN ?>/sync";      
+                                <?php
+                                } 
+                                ?>
 			 });
          }
          var storeSelectedContacts = function () {
@@ -174,7 +201,7 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
              }
 //             $("#txtselectedcontacts").html(unescape(contacts));
              var postdata =  {action: "selectedcontacts",data:JSON.stringify(socialinviter.contactimporter.getSelectedContacts().addressbook)};
-             $.post("<?php print PATH_DOMAIN ?>/sync/processor.php", postdata, function (response) {
+             $.post("<?php print PATH_DOMAIN ?>/syncing/processor.php", postdata, function (response) {
                 //console.log(response);
              });
          }
@@ -186,7 +213,7 @@ if(!isset($_GET['service']) || $_GET['service'] == ''){
 				 subject:$(".mailing-subject").val(),
 				 message: $(".mailing-message").val()
 			 };
-			 $.post("<?php print PATH_DOMAIN ?>/sync/processor.php", data, function (response) {
+			 $.post("<?php print PATH_DOMAIN ?>/syncing/processor.php", data, function (response) {
 				//console.log(response);
 				//socialinviter.modalSI.showSuccessMessage("Success: Email sent.");
 				socialinviter.modalSI.showInfoMessage("Note: Please use your SMTP to send emails");

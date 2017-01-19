@@ -27,7 +27,13 @@ if(isset($_POST['action']) && $_POST['action'] == 'register'){
 		if($result->num_rows == 0){
 			$password = hash('sha256', $password);
 
-			if(!$db->query("INSERT INTO clients (firstname,lastname,country,email,password,status,access) VALUES ('$firstname','$lastname','$country','$email','$password','0','u')")){
+                        //Generate a random string.
+                        $token = openssl_random_pseudo_bytes(64);
+
+                        //Convert the binary data into hexadecimal representation.
+                        $token = bin2hex($token);
+                       
+			if(!$db->query("INSERT INTO clients (firstname,lastname,country,email,password,status,access,external_authkey,external_ipaddress,external_status) VALUES ('$firstname','$lastname','$country','$email','$password','0','u','".$token."','',0)")){
 				 $data['response'] = 'fail_db';
 				 $data['details'] = 'DB Insert error: '.$db->error;
 			}else{

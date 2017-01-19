@@ -6,13 +6,15 @@
     RewriteBase /
 	
 	# Enforce SSL https://www. 
-#	RewriteCond %{HTTPS} !=on
-#	RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	RewriteCond %{HTTPS} !=on
+	RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 	
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} !(\.png|\.jpg|\.gif|\.jpeg|\.bmp|\.css|\.js)$
 	RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+	
+	# RewriteRule ^/export /syncing/export.php
 	
 </IfModule>
 

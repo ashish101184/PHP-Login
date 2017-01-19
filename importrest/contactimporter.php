@@ -315,7 +315,7 @@ include 'config.php';
                         <td colspan="2">
                         </td>
                         <td>
-                            <input type="submit" class="btn" value="Get authentication url" />
+                            <input id="get_auth_code" type="submit" class="btn" value="Get authentication url" />
                         </td>
                     </tr>
                     <tr class="outlook">
@@ -404,7 +404,7 @@ include 'config.php';
                     <td colspan="2">
                     </td>
                     <td>
-                        <input type="button" class="btn" value="Authentication user" onclick="authUser()" />
+                        <input id="authentication_user" type="button" class="btn" value="Authentication user" onclick="authUser()" />
                     </td>
                 </tr>
             </table>
@@ -449,7 +449,7 @@ include 'config.php';
                     <td colspan="2">
                     </td>
                     <td>
-                        <input type="submit" class="btn" value="Get access token" onclick="javascript:return getAccTok()" />
+                        <input id="get_access_token" type="submit" class="btn" value="Get access token" onclick="javascript:return getAccTok()" />
                     </td>
                 </tr>
                 <tr>
@@ -502,7 +502,7 @@ include 'config.php';
     <tr>
         <td colspan="2"></td>
         <td>
-            <input type="submit" class="btn" value="Get contacts" onclick="javascript:return getContacts()"/>
+            <input id="get_contacts" type="submit" class="btn" value="Get contacts" onclick="javascript:return getContacts()"/>
         </td>
     </tr>
     <tr>
@@ -544,7 +544,18 @@ include 'config.php';
             license: licenses,
             callback: function (sigData) {
                 //Get your formatted signature key here
-                document.getElementById("formattedKey").value = sigData[licenses];
+//                document.getElementById("formattedKey").value = sigData[licenses];
+                $("#formattedKey").val(sigData[licenses]);
+//                alert($("#txtAuthUrl").val());
+//                if(!$("#txtAuthUrl").val()){
+//                    $("#get_auth_code").click();
+//                }else if(!$("#accToken").val()){
+//                    $("#authentication_user").click();
+//                }else if(!$("#conToken").val()){
+//                    $("#get_access_token").click();
+//                }else if(!$("#conResponse").val()){
+//                    $("#get_contacts").click();
+//                }
             }
         });
 

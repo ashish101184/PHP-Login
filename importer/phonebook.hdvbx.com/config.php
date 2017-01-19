@@ -9,7 +9,7 @@ define('WEB_TESTMODE', '1'); //0=TestingOFF, 1=TestingON, 2=Testing(LiveTwilio T
 define('DEBUGGER', '1'); //Only Admin can see. 0=Off, 1=On
 
 if(checkLocalhost()){
-	define('PATH_DOMAIN', 'http://127.0.0.1:97');
+	define('PATH_DOMAIN', 'https://localhost');
 	define('PATH_INCLUDE', $_SERVER['DOCUMENT_ROOT']);
 	
 	define('DB_HOST', 'localhost');

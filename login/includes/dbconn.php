@@ -6,7 +6,7 @@ class DbConn
     public function __construct()
     {
         $abs = $_SERVER['DOCUMENT_ROOT']."/login/";
-        require $abs.'dbconf.php';
+        require 'E:\xampp\htdocs\sociallogin\PHP-Login\login\dbconf.php';
         $this->host = $host; // Host name
         $this->username = $username; // Mysql username
         $this->password = $password; // Mysql password
